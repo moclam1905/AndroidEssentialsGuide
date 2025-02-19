@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.nguyenmoclam.androidessentialsguide"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.nguyenmoclam.androidessentialsguide"
