@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/ArticleListFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.nguyenmoclam.androidessentialsguide.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/ArticleListFragment"
+        android:name="com.nguyenmoclam.androidessentialsguide.articlelist.ArticleListFragment"
+        android:label="@string/fragment_article_list_label"
+        tools:layout="@layout/fragment_article_list">
     </fragment>
 </navigation>
