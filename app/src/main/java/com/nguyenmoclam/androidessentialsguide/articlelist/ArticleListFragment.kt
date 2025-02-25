@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
@@ -18,7 +20,23 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     private var _binding: FragmentArticleListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: ArticleAdapter
-    private var articleRepository: ArticleRepository = FromMemoryArticleService()
+    private lateinit var viewModel: ArticleViewModel
+    private val articlesListViewModelFactory =
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val repository: ArticleRepository = FromMemoryArticleService()
+                @Suppress("UNCHECKED_CAST")
+                return ArticleViewModel(
+                    articleRepository = repository,
+                ) as T
+            }
+        }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel =
+            ViewModelProvider(this, articlesListViewModelFactory)[ArticleViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +57,8 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        adapter.articles = articleRepository.fetchArticles()
+
+        subscribeToViewModel()
     }
 
     override fun onDestroyView() {
@@ -60,5 +79,11 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         val uri = Uri.parse(article.url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
+    }
+
+    private fun subscribeToViewModel() {
+        viewModel.article.observe(viewLifecycleOwner) { articles ->
+            adapter.articles = articles
+        }
     }
 }
