@@ -3,7 +3,7 @@ package com.nguyenmoclam.androidessentialsguide.data
 import com.nguyenmoclam.androidessentialsguide.models.Article
 
 class FromMemoryArticleService : ArticleRepository {
-    override fun fetchArticles(): List<Article> {
+    override suspend fun fetchArticles(): List<Article> {
         return listOf(
             Article(
                 title = "Thermal Ca2+/Mg2+ exchange reactions to synthesize CO2 removal materials",

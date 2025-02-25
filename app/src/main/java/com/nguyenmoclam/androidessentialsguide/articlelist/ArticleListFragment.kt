@@ -20,13 +20,13 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     private var _binding: FragmentArticleListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: ArticleAdapter
-    private lateinit var viewModel: ArticleViewModel
+    private lateinit var viewModel: ArticleListViewModel
     private val articlesListViewModelFactory =
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val repository: ArticleRepository = FromMemoryArticleService()
                 @Suppress("UNCHECKED_CAST")
-                return ArticleViewModel(
+                return ArticleListViewModel(
                     articleRepository = repository,
                 ) as T
             }
@@ -35,7 +35,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel =
-            ViewModelProvider(this, articlesListViewModelFactory)[ArticleViewModel::class.java]
+            ViewModelProvider(this, articlesListViewModelFactory)[ArticleListViewModel::class.java]
     }
 
     override fun onCreateView(
