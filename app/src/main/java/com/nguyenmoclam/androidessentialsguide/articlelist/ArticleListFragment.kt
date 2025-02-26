@@ -65,6 +65,10 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         subscribeToViewModel()
+
+        binding.retryButton.setOnClickListener {
+            viewModel.retryClicked()
+        }
     }
 
     override fun onDestroyView() {
@@ -96,7 +100,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     private fun displayViewState(viewState: ArticleListViewState) {
         binding.progressBar.visibleIf(viewState is ArticleListViewState.Loading)
         binding.articleList.visibleIf(viewState is ArticleListViewState.Success)
-        binding.errorMessage.visibleIf(viewState is ArticleListViewState.Error)
+        binding.errorGroup.visibleIf(viewState is ArticleListViewState.Error)
 
         if (viewState is ArticleListViewState.Success) {
             adapter.articles = viewState.articles

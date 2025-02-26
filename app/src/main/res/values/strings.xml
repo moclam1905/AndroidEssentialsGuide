@@ -7,5 +7,6 @@
     <string name="previous">Previous</string>
     <string name="by_author">By %s</string>
     <string name="fetch_error_msg">Some error occurred while fetching articles.</string>
+    <string name="retry">Retry</string>
 
 </resources>

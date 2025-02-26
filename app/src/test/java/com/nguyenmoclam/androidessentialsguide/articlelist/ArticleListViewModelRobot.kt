@@ -38,4 +38,9 @@ class ArticleListViewModelRobot {
             val actualCalls = fakeArticleRepository.getFetchArticleCallCount()
             assertThat(actualCalls).isEqualTo(expectedNumberOfCalls)
         }
+
+    fun clickRetry() =
+        apply {
+            viewModel.retryClicked()
+        }
 }

@@ -8,11 +8,15 @@ import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
 import com.nguyenmoclam.androidessentialsguide.data.DataResponse
 import kotlinx.coroutines.launch
 
-class ArticleListViewModel(articleRepository: ArticleRepository) : ViewModel() {
+class ArticleListViewModel(private val articleRepository: ArticleRepository) : ViewModel() {
     private val mState: MutableLiveData<ArticleListViewState> = MutableLiveData()
     val state: LiveData<ArticleListViewState> = mState
 
     init {
+        fetchArticlesFromRepository()
+    }
+
+    private fun fetchArticlesFromRepository() {
         viewModelScope.launch {
             mState.value = ArticleListViewState.Loading
 
@@ -28,5 +32,9 @@ class ArticleListViewModel(articleRepository: ArticleRepository) : ViewModel() {
                     }
                 }
         }
+    }
+
+    fun retryClicked() {
+        fetchArticlesFromRepository()
     }
 }
