@@ -7,5 +7,5 @@ import org.simpleframework.xml.Root
 data class AndroidBlogLink(
     @field:Attribute(name = "href")
     @param:Attribute(name = "href")
-    val href: String = "",
+    val href: String? = null,
 )

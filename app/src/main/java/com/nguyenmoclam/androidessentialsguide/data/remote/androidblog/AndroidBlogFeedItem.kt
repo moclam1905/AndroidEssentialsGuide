@@ -7,11 +7,11 @@ import org.simpleframework.xml.Root
 data class AndroidBlogFeedItem(
     @field:Element(name = "title")
     @param:Element(name = "title")
-    val title: String = "",
+    val title: String? = null,
     @field:Element(name = "author")
     @param:Element(name = "author")
-    val author: AndroidBlogAuthor = AndroidBlogAuthor(),
+    val author: AndroidBlogAuthor? = null,
     @field:Element(name = "link")
     @param:Element(name = "link")
-    val link: AndroidBlogLink = AndroidBlogLink(),
+    val link: AndroidBlogLink? = null,
 )

@@ -8,16 +8,16 @@ class AndroidBlogArticleService(
     private val androidBlogRetrofitAPI: AndroidBlogRetrofitAPI,
 ) : ArticleRepository {
     override suspend fun fetchArticles(): List<Article> {
-        return androidBlogRetrofitAPI.getFeed().items.map(
+        return androidBlogRetrofitAPI.getFeed().items?.map(
             AndroidBlogFeedItem::toArticle,
-        )
+        ).orEmpty()
     }
 }
 
 private fun AndroidBlogFeedItem.toArticle(): Article {
     return Article(
-        htmlTitle = HtmlString(this.title),
-        authorName = this.author.name,
-        url = this.link.href,
+        htmlTitle = HtmlString(this.title.orEmpty()),
+        authorName = this.author?.name.orEmpty(),
+        url = this.link?.href.orEmpty(),
     )
 }
