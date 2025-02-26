@@ -2,6 +2,7 @@ package com.nguyenmoclam.androidessentialsguide.data.remote.androidblog
 
 import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
 import com.nguyenmoclam.androidessentialsguide.models.Article
+import com.nguyenmoclam.androidessentialsguide.utils.HtmlString
 
 class AndroidBlogArticleService(
     private val androidBlogRetrofitAPI: AndroidBlogRetrofitAPI,
@@ -15,7 +16,7 @@ class AndroidBlogArticleService(
 
 private fun AndroidBlogFeedItem.toArticle(): Article {
     return Article(
-        title = this.title,
+        htmlTitle = HtmlString(this.title),
         authorName = this.author.name,
         url = this.link.href,
     )
