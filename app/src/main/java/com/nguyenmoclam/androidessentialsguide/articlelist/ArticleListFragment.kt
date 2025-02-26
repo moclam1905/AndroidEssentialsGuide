@@ -16,6 +16,7 @@ import com.nguyenmoclam.androidessentialsguide.data.remote.androidblog.AndroidBl
 import com.nguyenmoclam.androidessentialsguide.data.remote.androidblog.AndroidBlogRetrofitAPI
 import com.nguyenmoclam.androidessentialsguide.databinding.FragmentArticleListBinding
 import com.nguyenmoclam.androidessentialsguide.models.Article
+import com.nguyenmoclam.androidessentialsguide.utils.visibleIf
 
 class ArticleListFragment : Fragment(), ArticleClickListener {
     private var _binding: FragmentArticleListBinding? = null
@@ -87,8 +88,17 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     }
 
     private fun subscribeToViewModel() {
-        viewModel.article.observe(viewLifecycleOwner) { articles ->
-            adapter.articles = articles
+        viewModel.state.observe(viewLifecycleOwner) { viewState ->
+            displayViewState(viewState)
+        }
+    }
+
+    private fun displayViewState(viewState: ArticleListViewState) {
+        binding.progressBar.visibleIf(viewState is ArticleListViewState.Loading)
+        binding.articleList.visibleIf(viewState is ArticleListViewState.Success)
+
+        if (viewState is ArticleListViewState.Success) {
+            adapter.articles = viewState.articles
         }
     }
 }
