@@ -7,5 +7,5 @@ sealed class ArticleListViewState {
 
     data class Success(val articles: List<Article>) : ArticleListViewState()
 
-    class Error(val message: String) : ArticleListViewState()
+    data class Error(val message: Throwable) : ArticleListViewState()
 }

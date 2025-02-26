@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
+import com.nguyenmoclam.androidessentialsguide.data.DataResponse
 import kotlinx.coroutines.launch
 
 class ArticleListViewModel(articleRepository: ArticleRepository) : ViewModel() {
@@ -14,9 +15,18 @@ class ArticleListViewModel(articleRepository: ArticleRepository) : ViewModel() {
     init {
         viewModelScope.launch {
             mState.value = ArticleListViewState.Loading
-            // Fetch articles
-            val fetchedArticles = articleRepository.fetchArticles()
-            mState.value = ArticleListViewState.Success(fetchedArticles)
+
+            val response = articleRepository.fetchArticles()
+            mState.value =
+                when (response) {
+                    is DataResponse.Success -> {
+                        ArticleListViewState.Success(response.data)
+                    }
+
+                    is DataResponse.Error -> {
+                        ArticleListViewState.Error(response.message)
+                    }
+                }
         }
     }
 }

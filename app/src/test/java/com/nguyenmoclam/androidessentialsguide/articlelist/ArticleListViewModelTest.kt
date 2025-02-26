@@ -31,4 +31,13 @@ class ArticleListViewModelTest {
             .assertViewState(expectedViewState = ArticleListViewState.Success(testArticles))
             .assertNumberOfCallsToFetchArticles(1)
     }
+
+    @Test
+    fun failedRequest() {
+        val networkError = Throwable("Network Error")
+
+        testRobot.buildViewModel().assertViewState(ArticleListViewState.Loading)
+            .emitFailure(networkError).assertViewState(ArticleListViewState.Error(networkError))
+            .assertNumberOfCallsToFetchArticles(1)
+    }
 }

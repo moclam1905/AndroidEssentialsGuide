@@ -1,6 +1,7 @@
 package com.nguyenmoclam.androidessentialsguide.data.remote.androidblog
 
 import com.google.common.truth.Truth.assertThat
+import com.nguyenmoclam.androidessentialsguide.data.DataResponse
 import com.nguyenmoclam.androidessentialsguide.models.Article
 
 class AndroidBlogArticleServiceTestRobot {
@@ -19,7 +20,9 @@ class AndroidBlogArticleServiceTestRobot {
 
     suspend fun assertArticles(expectedArticles: List<Article>) =
         apply {
-            val actualArticles = service.fetchArticles()
+            val response = service.fetchArticles()
+            val actualArticles = (response as DataResponse.Success<List<Article>>).data
+
             assertThat(actualArticles).isEqualTo(expectedArticles)
         }
 }
