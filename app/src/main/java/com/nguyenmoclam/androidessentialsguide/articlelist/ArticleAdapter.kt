@@ -54,10 +54,11 @@ class ArticleAdapter(
             this.article = article
             binding.apply {
                 articleTitle.text = article.htmlTitle.getSpannedString()
-                articleAuthor.text = itemView.context.getString(
-                    R.string.by_author,
-                    article.authorName,
-                )
+                articleAuthor.text =
+                    itemView.context.getString(
+                        R.string.by_author,
+                        article.authorName,
+                    )
             }
         }
 
