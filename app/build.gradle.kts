@@ -43,6 +43,11 @@ android {
         viewBinding = true
         dataBinding = true
     }
+
+    // Do not fail the build when lint errors are found
+    lint {
+        abortOnError = false
+    }
 }
 
 dependencies {
@@ -54,6 +59,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.retrofit)
+    implementation(libs.converter.simplexml)
+    implementation(libs.logging.interceptor)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

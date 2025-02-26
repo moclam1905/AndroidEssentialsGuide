@@ -12,7 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
-import com.nguyenmoclam.androidessentialsguide.data.FromMemoryArticleService
+import com.nguyenmoclam.androidessentialsguide.data.remote.androidblog.AndroidBlogArticleService
+import com.nguyenmoclam.androidessentialsguide.data.remote.androidblog.AndroidBlogRetrofitAPI
 import com.nguyenmoclam.androidessentialsguide.databinding.FragmentArticleListBinding
 import com.nguyenmoclam.androidessentialsguide.models.Article
 
@@ -24,7 +25,11 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     private val articlesListViewModelFactory =
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val repository: ArticleRepository = FromMemoryArticleService()
+                val repository: ArticleRepository =
+                    AndroidBlogArticleService(
+                        androidBlogRetrofitAPI = AndroidBlogRetrofitAPI.getDefaultApi(),
+                    )
+
                 @Suppress("UNCHECKED_CAST")
                 return ArticleListViewModel(
                     articleRepository = repository,
