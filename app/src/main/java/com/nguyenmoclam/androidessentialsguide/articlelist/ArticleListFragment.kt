@@ -69,6 +69,10 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         startActivity(intent)
     }
 
+    override fun onBookmarkClicked(article: Article) {
+        viewModel.bookmarkClicked(article)
+    }
+
     private fun subscribeToViewModel() {
         viewModel.state.observe(viewLifecycleOwner) { viewState ->
             displayViewState(viewState)

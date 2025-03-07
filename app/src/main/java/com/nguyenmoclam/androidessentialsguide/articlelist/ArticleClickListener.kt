@@ -4,4 +4,6 @@ import com.nguyenmoclam.androidessentialsguide.models.Article
 
 interface ArticleClickListener {
     fun onArticleClicked(article: Article)
+
+    fun onBookmarkClicked(article: Article)
 }

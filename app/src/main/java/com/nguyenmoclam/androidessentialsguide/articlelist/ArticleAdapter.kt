@@ -48,6 +48,7 @@ class ArticleAdapter(
 
         init {
             binding.root.setOnClickListener(this)
+            binding.bookmarkButton.setOnClickListener(this)
         }
 
         fun bindArticle(article: Article) {
@@ -59,11 +60,25 @@ class ArticleAdapter(
                         R.string.by_author,
                         article.authorName,
                     )
+                val bookmarkIcon =
+                    if (article.bookmark) {
+                        R.drawable.ic_bookmark_selected
+                    } else {
+                        R.drawable.ic_bookmark_unselected
+                    }
+                binding.bookmarkButton.setImageResource(bookmarkIcon)
             }
         }
 
         override fun onClick(v: View?) {
-            article?.let { clickListener.onArticleClicked(it) }
+            when (v?.id) {
+                R.id.bookmark_button -> {
+                    article?.let { clickListener.onBookmarkClicked(it) }
+                }
+                else -> {
+                    article?.let { clickListener.onArticleClicked(it) }
+                }
+            }
         }
     }
 }
