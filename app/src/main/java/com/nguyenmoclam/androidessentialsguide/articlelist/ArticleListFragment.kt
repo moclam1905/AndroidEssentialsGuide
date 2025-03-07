@@ -7,42 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
-import com.nguyenmoclam.androidessentialsguide.data.remote.androidblog.AndroidBlogArticleService
-import com.nguyenmoclam.androidessentialsguide.data.remote.androidblog.AndroidBlogRetrofitAPI
 import com.nguyenmoclam.androidessentialsguide.databinding.FragmentArticleListBinding
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.utils.visibleIf
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ArticleListFragment : Fragment(), ArticleClickListener {
     private var _binding: FragmentArticleListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: ArticleAdapter
-    private lateinit var viewModel: ArticleListViewModel
-    private val articlesListViewModelFactory =
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val repository: ArticleRepository =
-                    AndroidBlogArticleService(
-                        androidBlogRetrofitAPI = AndroidBlogRetrofitAPI.getDefaultApi(),
-                    )
-
-                @Suppress("UNCHECKED_CAST")
-                return ArticleListViewModel(
-                    articleRepository = repository,
-                ) as T
-            }
-        }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel =
-            ViewModelProvider(this, articlesListViewModelFactory)[ArticleListViewModel::class.java]
-    }
+    private val viewModel: ArticleListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.plugin)
 }
 
 android {
@@ -64,6 +65,12 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.lottie)
 
+    // di
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    androidTestImplementation(libs.hilt.testing)
+    kaptAndroidTest(libs.hilt.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -89,4 +96,9 @@ detekt {
 
 tasks.withType<Detekt>().configureEach {
     jvmTarget = "17"
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
