@@ -43,4 +43,9 @@ class ArticleListViewModelRobot {
         apply {
             viewModel.retryClicked()
         }
+
+    fun clickBookmark(article: Article) =
+        apply {
+            viewModel.bookmarkClicked(article)
+        }
 }
