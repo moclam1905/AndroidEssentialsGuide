@@ -31,7 +31,7 @@ class RoomArticleDatabaseTest {
     }
 
     @Test
-    fun insertReadBookmark()  {
+    fun insertReadBookmark() {
         val testArticle =
             PersistableArticle(
                 url = "https://testUrl",
