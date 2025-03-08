@@ -20,32 +20,18 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        setupNavController()
-        setupBottomNavigation()
+        // Get NavController from NavHostFragment
+        val navController = findNavController(R.id.nav_host_fragment)
+
+        // Find reference to bottom navigation view
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        // Link bottom nav with navController
+        bottomNavigationView.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.nav_host_fragment).navigateUp() || super.onSupportNavigateUp()
-    }
-
-    private fun setupNavController() {
         val navController = findNavController(R.id.nav_host_fragment)
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment)!!
-
-        navController.navigatorProvider.addNavigator(
-            KeepStateNavigator(
-                this,
-                navHostFragment.childFragmentManager,
-                R.id.nav_host_fragment
-            )
-        )
-
-        navController.setGraph(R.navigation.nav_graph)
-    }
-
-    private fun setupBottomNavigation() {
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigationView.setupWithNavController(findNavController(R.id.nav_host_fragment))
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
