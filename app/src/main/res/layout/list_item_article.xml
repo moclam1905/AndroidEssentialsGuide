@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-
-
         android:clickable="true"
         android:focusable="true"
         android:padding="8dp">
@@ -21,7 +19,6 @@
             android:id="@+id/article_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
             app:layout_constraintEnd_toStartOf="@id/bookmark_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
