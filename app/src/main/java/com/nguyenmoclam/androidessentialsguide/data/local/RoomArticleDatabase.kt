@@ -1,7 +1,9 @@
 package com.nguyenmoclam.androidessentialsguide.data.local
 
+import kotlinx.coroutines.flow.Flow
+
 class RoomArticleDatabase(private val roomDatabase: RoomStudyGuideDatabase) : ArticleDatabase {
-    override suspend fun fetchBookmarks(): List<PersistableArticle> {
+    override fun fetchBookmarks(): Flow<List<PersistableArticle>> {
         return roomDatabase.articleDao().fetchBookmarks()
     }
 

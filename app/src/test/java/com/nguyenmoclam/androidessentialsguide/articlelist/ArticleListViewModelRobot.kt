@@ -9,12 +9,12 @@ class ArticleListViewModelRobot {
     private lateinit var viewModel: ArticleListViewModel
     private val fakeArticleRepository = FakeArticleRepository()
 
-    fun emitArticles(articles: List<Article>) =
+    suspend fun emitArticles(articles: List<Article>) =
         apply {
             fakeArticleRepository.emitArticles(articles)
         }
 
-    fun emitFailure(error: Throwable) =
+    suspend fun emitFailure(error: Throwable) =
         apply {
             fakeArticleRepository.emitFailure(error)
         }
@@ -54,4 +54,8 @@ class ArticleListViewModelRobot {
             val wasPersisted = fakeArticleRepository.getPersistArticles().contains(article)
             assertThat(wasPersisted).isTrue()
         }
+
+    fun cleanUp() {
+        fakeArticleRepository.closeChannels()
+    }
 }

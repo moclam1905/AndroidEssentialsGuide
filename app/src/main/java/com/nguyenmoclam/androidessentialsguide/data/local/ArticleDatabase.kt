@@ -1,7 +1,9 @@
 package com.nguyenmoclam.androidessentialsguide.data.local
 
+import kotlinx.coroutines.flow.Flow
+
 interface ArticleDatabase {
-    suspend fun fetchBookmarks(): List<PersistableArticle>
+    fun fetchBookmarks(): Flow<List<PersistableArticle>>
 
     suspend fun insertArticle(article: PersistableArticle)
 }

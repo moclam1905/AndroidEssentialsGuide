@@ -5,6 +5,7 @@ import com.nguyenmoclam.androidessentialsguide.data.DataResponse
 import com.nguyenmoclam.androidessentialsguide.data.local.PersistableArticle
 import com.nguyenmoclam.androidessentialsguide.fake.FakeArticleDatabase
 import com.nguyenmoclam.androidessentialsguide.models.Article
+import kotlinx.coroutines.flow.single
 
 class AndroidBlogArticleServiceTestRobot {
     private val fakeApi = FakeAndroidBlogRetrofitAPI()
@@ -23,7 +24,7 @@ class AndroidBlogArticleServiceTestRobot {
 
     suspend fun assertArticles(expectedArticles: List<Article>) =
         apply {
-            val response = service.fetchArticles()
+            val response = service.fetchArticles().single()
             val actualArticles = (response as DataResponse.Success<List<Article>>).data
 
             assertThat(actualArticles).isEqualTo(expectedArticles)

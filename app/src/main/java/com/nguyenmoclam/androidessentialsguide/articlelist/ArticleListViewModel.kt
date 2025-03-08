@@ -28,17 +28,18 @@ class ArticleListViewModel
             viewModelScope.launch {
                 mState.value = ArticleListViewState.Loading
 
-                val response = articleRepository.fetchArticles()
-                mState.value =
-                    when (response) {
-                        is DataResponse.Success -> {
-                            ArticleListViewState.Success(response.data)
-                        }
+                articleRepository.fetchArticles().collect { response ->
+                    mState.value =
+                        when (response) {
+                            is DataResponse.Success -> {
+                                ArticleListViewState.Success(response.data)
+                            }
 
-                        is DataResponse.Error -> {
-                            ArticleListViewState.Error(response.message)
+                            is DataResponse.Error -> {
+                                ArticleListViewState.Error(response.message)
+                            }
                         }
-                    }
+                }
             }
         }
 

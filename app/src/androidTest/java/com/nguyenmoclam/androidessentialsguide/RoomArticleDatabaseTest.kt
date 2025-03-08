@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nguyenmoclam.androidessentialsguide.data.local.PersistableArticle
 import com.nguyenmoclam.androidessentialsguide.data.local.RoomArticleDatabase
 import com.nguyenmoclam.androidessentialsguide.data.local.RoomStudyGuideDatabase
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -43,8 +44,8 @@ class RoomArticleDatabaseTest {
         runBlocking {
             articleDatabase.insertArticle(testArticle)
 
-            val bookmarks = articleDatabase.fetchBookmarks()
-            assert(bookmarks.contains(testArticle))
+            val bookmarks = articleDatabase.fetchBookmarks().first()
+            assert(bookmarks.any { it.url == testArticle.url })
         }
     }
 }
