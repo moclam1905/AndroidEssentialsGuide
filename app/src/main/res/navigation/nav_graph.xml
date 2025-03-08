@@ -5,10 +5,15 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/ArticleListFragment">
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/ArticleListFragment"
         android:name="com.nguyenmoclam.androidessentialsguide.articlelist.ArticleListFragment"
         android:label="@string/fragment_article_list_label"
-        tools:layout="@layout/fragment_article_list">
-    </fragment>
+        tools:layout="@layout/fragment_article_list" />
+
+    <keep_state_fragment
+        android:id="@+id/BookmarkListFragment"
+        android:name="com.nguyenmoclam.androidessentialsguide.bookmarks.BookmarkListFragment"
+        android:label="@string/bookmark_article"
+        tools:layout="@layout/fragment_bookmark_list" />
 </navigation>

@@ -9,4 +9,6 @@
     <string name="fetch_error_msg">Some error occurred while fetching articles.</string>
     <string name="retry">Retry</string>
     <string name="bookmark_article">Bookmark Article</string>
+    <string name="all_articles">All Articles</string>
+    <string name="bookmarks">Bookmarks</string>
 </resources>
