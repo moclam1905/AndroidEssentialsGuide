@@ -7,19 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenmoclam.androidessentialsguide.databinding.FragmentArticleListBinding
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.utils.visibleIf
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class ArticleListFragment : Fragment(), ArticleClickListener {
+abstract class BaseArticleListFragment : Fragment(), ArticleClickListener {
     private var _binding: FragmentArticleListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: ArticleAdapter
-    private val viewModel: ArticleListViewModel by viewModels()
+
+    abstract val viewModel: BaseArticleListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +54,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     private fun setupRecyclerView() {
         binding.articleList.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = this@ArticleListFragment.adapter
+            adapter = this@BaseArticleListFragment.adapter
         }
     }
 

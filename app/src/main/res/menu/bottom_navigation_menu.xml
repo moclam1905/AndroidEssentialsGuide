@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.nguyenmoclam.androidessentialsguide.MainActivity">
     <item
-        android:id="@+id/ArticleListFragment"
+        android:id="@+id/AndroidBlogArticleListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_articles"
         android:title="@string/all_articles" />

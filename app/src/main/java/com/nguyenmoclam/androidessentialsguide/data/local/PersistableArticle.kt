@@ -3,6 +3,7 @@ package com.nguyenmoclam.androidessentialsguide.data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.nguyenmoclam.androidessentialsguide.models.Article
+import com.nguyenmoclam.androidessentialsguide.utils.HtmlString
 
 @Entity
 data class PersistableArticle(
@@ -11,7 +12,16 @@ data class PersistableArticle(
     val title: String = "",
     val authorName: String = "",
     val bookmarked: Boolean = false,
-)
+) {
+    fun toArticle(): Article {
+        return Article(
+            htmlTitle = HtmlString(title),
+            authorName = authorName,
+            url = url,
+            bookmark = bookmarked,
+        )
+    }
+}
 
 fun Article.toPersistableArticle(): PersistableArticle {
     return PersistableArticle(

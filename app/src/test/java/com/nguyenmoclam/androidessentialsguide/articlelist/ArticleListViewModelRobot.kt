@@ -6,7 +6,7 @@ import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.testObserver
 
 class ArticleListViewModelRobot {
-    private lateinit var viewModel: ArticleListViewModel
+    private lateinit var viewModel: AndroidBlogArticleListViewModel
     private val fakeArticleRepository = FakeArticleRepository()
 
     suspend fun emitArticles(articles: List<Article>) =
@@ -22,7 +22,7 @@ class ArticleListViewModelRobot {
     fun buildViewModel() =
         apply {
             viewModel =
-                ArticleListViewModel(
+                AndroidBlogArticleListViewModel(
                     articleRepository = fakeArticleRepository,
                 )
         }

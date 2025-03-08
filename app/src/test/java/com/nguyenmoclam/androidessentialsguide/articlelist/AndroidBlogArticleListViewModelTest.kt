@@ -9,7 +9,7 @@ import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 
-class ArticleListViewModelTest {
+class AndroidBlogArticleListViewModelTest {
     private val testRobot = ArticleListViewModelRobot()
 
     @JvmField
