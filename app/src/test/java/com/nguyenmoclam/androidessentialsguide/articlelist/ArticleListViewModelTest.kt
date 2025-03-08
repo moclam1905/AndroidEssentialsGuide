@@ -68,5 +68,6 @@ class ArticleListViewModelTest {
             .assertViewState(ArticleListViewState.Success(initialArticles))
             .clickBookmark(unBookmarkedArticle)
             .assertViewState(ArticleListViewState.Success(updatedArticles))
+            .assertArticleWasPersisted(bookmarkedArticle)
     }
 }

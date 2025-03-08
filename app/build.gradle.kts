@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.plugin)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -70,6 +71,13 @@ dependencies {
     kapt(libs.hilt.compiler)
     androidTestImplementation(libs.hilt.testing)
     kaptAndroidTest(libs.hilt.compiler)
+
+    // database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    // optional - Test helpers
+    testImplementation(libs.androidx.room.testing)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

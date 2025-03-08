@@ -48,4 +48,10 @@ class ArticleListViewModelRobot {
         apply {
             viewModel.bookmarkClicked(article)
         }
+
+    fun assertArticleWasPersisted(article: Article) =
+        apply {
+            val wasPersisted = fakeArticleRepository.getPersistArticles().contains(article)
+            assertThat(wasPersisted).isTrue()
+        }
 }

@@ -47,6 +47,12 @@ class ArticleListViewModel
         }
 
         fun bookmarkClicked(article: Article) {
+            val updatedArticle = article.copy(bookmark = !article.bookmark)
+
+            viewModelScope.launch {
+                articleRepository.persistArticle(updatedArticle)
+            }
+
             val currentList = (mState.value as? ArticleListViewState.Success)?.articles.orEmpty()
             val updatedList =
                 currentList.map { item ->
