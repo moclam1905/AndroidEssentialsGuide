@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenmoclam.androidessentialsguide.databinding.FragmentArticleListBinding
 import com.nguyenmoclam.androidessentialsguide.models.Article
@@ -58,8 +57,6 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         binding.articleList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@ArticleListFragment.adapter
-            val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-            addItemDecoration(divider)
         }
     }
 

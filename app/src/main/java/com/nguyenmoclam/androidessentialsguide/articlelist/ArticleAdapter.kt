@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import com.nguyenmoclam.androidessentialsguide.R
 import com.nguyenmoclam.androidessentialsguide.databinding.ListItemArticleBinding
 import com.nguyenmoclam.androidessentialsguide.models.Article
@@ -47,7 +48,7 @@ class ArticleAdapter(
         private val viewModel = ArticleListItemViewModel()
 
         init {
-            binding.root.setOnClickListener(this)
+            binding.articleContent.setOnClickListener(this)
             binding.bookmarkButton.setOnClickListener(this)
         }
 
@@ -57,6 +58,13 @@ class ArticleAdapter(
             binding.articleTitle.text = viewModel.articleTitle
             binding.articleAuthor.text = viewModel.getAuthorText(itemView.resources)
             binding.bookmarkButton.setImageResource(viewModel.bookmarkButtonRes)
+
+            binding.chipGroup.removeAllViews()
+            viewModel.articleTags.forEach { tag ->
+                val chip = Chip(itemView.context)
+                chip.text = tag
+                binding.chipGroup.addView(chip)
+            }
         }
 
         override fun onClick(v: View?) {

@@ -22,4 +22,7 @@ class ArticleListItemViewModel {
     fun getAuthorText(resource: Resources): String {
         return resource.getString(R.string.by_author, article?.authorName)
     }
+
+    val articleTags: List<String>
+        get() = article?.tags.orEmpty()
 }

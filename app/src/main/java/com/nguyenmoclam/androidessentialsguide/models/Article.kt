@@ -7,4 +7,5 @@ data class Article(
     val authorName: String = "",
     val url: String = "",
     val bookmark: Boolean = false,
+    val tags: List<String> = emptyList(),
 )
