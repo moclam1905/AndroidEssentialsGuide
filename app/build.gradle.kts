@@ -1,6 +1,6 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
     alias(libs.plugins.android.application)
@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.ksp)
-    id("com.github.ben-manes.versions") version "0.52.0"
+    alias(libs.plugins.gradle.versions)
 }
 
 android {
@@ -112,6 +112,7 @@ tasks.withType<Detekt>().configureEach {
 kapt {
     correctErrorTypes = true
 }
+
 fun isNonStable(version: String): Boolean {
     val stableKeywords = listOf("RELEASE", "FINAL", "GA")
     val isStable = stableKeywords.any { version.uppercase().contains(it) }
@@ -124,3 +125,6 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
     }
 }
 // use: ./gradlew dependencyUpdates
+// prevent update agp version
+// ./gradlew versionCatalogUpdate --interactive
+// ./gradlew versionCatalogApplyUpdates
