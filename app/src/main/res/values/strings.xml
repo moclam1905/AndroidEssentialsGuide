@@ -11,4 +11,6 @@
     <string name="bookmark_article">Bookmark Article</string>
     <string name="all_articles">All Articles</string>
     <string name="bookmarks">Bookmarks</string>
+    <string name="android_blog_empty_message">Android Blog has no published articles.</string>
+    <string name="bookmarks_empty_message">You have no saved bookmarks. </string>
 </resources>

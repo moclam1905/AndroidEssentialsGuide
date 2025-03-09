@@ -15,5 +15,5 @@
         android:id="@+id/BookmarkListFragment"
         android:name="com.nguyenmoclam.androidessentialsguide.bookmarks.BookmarkListFragment"
         android:label="@string/bookmark_article"
-        tools:layout="@layout/fragment_bookmark_list" />
+        tools:layout="@layout/fragment_article_list" />
 </navigation>

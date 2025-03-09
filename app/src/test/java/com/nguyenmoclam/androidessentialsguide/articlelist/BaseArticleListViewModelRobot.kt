@@ -5,8 +5,8 @@ import com.nguyenmoclam.androidessentialsguide.fake.FakeArticleRepository
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.testObserver
 
-class ArticleListViewModelRobot {
-    private lateinit var viewModel: AndroidBlogArticleListViewModel
+class BaseArticleListViewModelRobot {
+    private lateinit var viewModel: BaseArticleListViewModel
     private val fakeArticleRepository = FakeArticleRepository()
 
     suspend fun emitArticles(articles: List<Article>) =
@@ -22,9 +22,13 @@ class ArticleListViewModelRobot {
     fun buildViewModel() =
         apply {
             viewModel =
-                AndroidBlogArticleListViewModel(
-                    articleRepository = fakeArticleRepository,
-                )
+                object :
+                    BaseArticleListViewModel(
+                        articleRepository = fakeArticleRepository,
+                    ) {
+                    override val emptyStateMessageTextRes: Int
+                        get() = 0
+                }
         }
 
     fun assertViewState(expectedViewState: ArticleListViewState) =

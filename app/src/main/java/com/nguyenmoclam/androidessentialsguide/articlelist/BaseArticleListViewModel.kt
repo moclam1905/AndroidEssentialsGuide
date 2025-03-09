@@ -9,11 +9,13 @@ import com.nguyenmoclam.androidessentialsguide.data.DataResponse
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import kotlinx.coroutines.launch
 
-open class BaseArticleListViewModel(
+abstract class BaseArticleListViewModel(
     private val articleRepository: ArticleRepository,
 ) : ViewModel() {
     private val mState: MutableLiveData<ArticleListViewState> = MutableLiveData()
     val state: LiveData<ArticleListViewState> = mState
+
+    abstract val emptyStateMessageTextRes: Int
 
     init {
         fetchArticlesFromRepository()
@@ -27,7 +29,7 @@ open class BaseArticleListViewModel(
                 mState.value =
                     when (response) {
                         is DataResponse.Success -> {
-                            ArticleListViewState.Success(response.data)
+                            handleSuccessNetworkResponse(response)
                         }
 
                         is DataResponse.Error -> {
@@ -60,5 +62,13 @@ open class BaseArticleListViewModel(
                 }
             }
         mState.value = ArticleListViewState.Success(updatedList)
+    }
+
+    private fun handleSuccessNetworkResponse(response: DataResponse.Success<List<Article>>): ArticleListViewState {
+        return if (response.data.isEmpty()) {
+            ArticleListViewState.Empty
+        } else {
+            ArticleListViewState.Success(response.data)
+        }
     }
 }

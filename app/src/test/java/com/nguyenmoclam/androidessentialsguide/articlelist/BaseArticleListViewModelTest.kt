@@ -9,8 +9,8 @@ import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 
-class AndroidBlogArticleListViewModelTest {
-    private val testRobot = ArticleListViewModelRobot()
+class BaseArticleListViewModelTest {
+    private val testRobot = BaseArticleListViewModelRobot()
 
     @JvmField
     @Rule
@@ -80,5 +80,14 @@ class AndroidBlogArticleListViewModelTest {
                 .clickBookmark(unBookmarkedArticle)
                 .assertViewState(ArticleListViewState.Success(updatedArticles))
                 .assertArticleWasPersisted(bookmarkedArticle)
+        }
+
+    @Test
+    fun emptyArticleListRequest(): Unit =
+        runBlocking {
+            val emptyArticles = emptyList<Article>()
+            testRobot.buildViewModel().assertViewState(ArticleListViewState.Loading)
+                .emitArticles(emptyArticles).assertViewState(ArticleListViewState.Empty)
+                .assertNumberOfCallsToFetchArticles(1)
         }
 }

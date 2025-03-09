@@ -1,5 +1,6 @@
 package com.nguyenmoclam.androidessentialsguide.bookmarks
 
+import com.nguyenmoclam.androidessentialsguide.R
 import com.nguyenmoclam.androidessentialsguide.articlelist.BaseArticleListViewModel
 import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
 import com.nguyenmoclam.androidessentialsguide.di.BookmarkedArticles
@@ -12,4 +13,7 @@ class BookmarkListViewModel
     constructor(
         @BookmarkedArticles
         private val articleRepository: ArticleRepository,
-    ) : BaseArticleListViewModel(articleRepository)
+    ) : BaseArticleListViewModel(articleRepository) {
+        override val emptyStateMessageTextRes: Int
+            get() = R.string.bookmarks_empty_message
+    }

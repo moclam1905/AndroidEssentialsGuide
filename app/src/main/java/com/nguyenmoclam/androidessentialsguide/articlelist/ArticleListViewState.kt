@@ -8,4 +8,6 @@ sealed class ArticleListViewState {
     data class Success(val articles: List<Article>) : ArticleListViewState()
 
     data class Error(val message: Throwable) : ArticleListViewState()
+
+    object Empty : ArticleListViewState()
 }

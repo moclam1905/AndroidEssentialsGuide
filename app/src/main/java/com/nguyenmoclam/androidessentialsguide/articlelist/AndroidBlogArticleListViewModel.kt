@@ -1,5 +1,6 @@
 package com.nguyenmoclam.androidessentialsguide.articlelist
 
+import com.nguyenmoclam.androidessentialsguide.R
 import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
 import com.nguyenmoclam.androidessentialsguide.di.AndroidBlogArticles
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,4 +12,7 @@ class AndroidBlogArticleListViewModel
     constructor(
         @AndroidBlogArticles
         private val articleRepository: ArticleRepository,
-    ) : BaseArticleListViewModel(articleRepository)
+    ) : BaseArticleListViewModel(articleRepository) {
+        override val emptyStateMessageTextRes: Int
+            get() = R.string.android_blog_empty_message
+    }
