@@ -8,4 +8,5 @@ data class Article(
     val url: String = "",
     val bookmark: Boolean = false,
     val tags: List<String> = emptyList(),
+    val publishedDate: String = "",
 )

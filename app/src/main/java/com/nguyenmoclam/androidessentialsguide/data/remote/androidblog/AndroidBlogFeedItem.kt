@@ -18,4 +18,7 @@ data class AndroidBlogFeedItem(
     @field:ElementList(name = "category", inline = true)
     @param:ElementList(name = "category", inline = true)
     val categories: List<AndroidBlogCategory>? = null,
+    @field:Element(name = "published")
+    @param:Element(name = "published")
+    val published: String? = null,
 )

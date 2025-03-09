@@ -27,6 +27,13 @@ class AndroidBlogArticleServiceTest {
                                     AndroidBlogLink(
                                         href = "https://test.com",
                                     ),
+                                categories =
+                                    listOf(
+                                        AndroidBlogCategory(
+                                            term = "Test Tag",
+                                        ),
+                                    ),
+                                published = "2024-01-01",
                             ),
                         ),
                 )
@@ -37,6 +44,8 @@ class AndroidBlogArticleServiceTest {
                         htmlTitle = HtmlString("Test Title"),
                         authorName = "Test Author",
                         url = "https://test.com",
+                        tags = listOf("Test Tag"),
+                        publishedDate = "2024-01-01",
                     ),
                 )
 

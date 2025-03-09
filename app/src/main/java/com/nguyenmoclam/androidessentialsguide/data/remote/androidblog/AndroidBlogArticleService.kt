@@ -59,5 +59,6 @@ private fun AndroidBlogFeedItem.toArticle(): Article {
         authorName = this.author?.name.orEmpty(),
         url = this.link?.href.orEmpty(),
         tags = tags,
+        publishedDate = this.published.orEmpty(),
     )
 }
