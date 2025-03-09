@@ -1,5 +1,6 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
     alias(libs.plugins.android.application)
@@ -9,6 +10,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.ksp)
+    id("com.github.ben-manes.versions") version "0.52.0"
 }
 
 android {
@@ -110,3 +112,15 @@ tasks.withType<Detekt>().configureEach {
 kapt {
     correctErrorTypes = true
 }
+fun isNonStable(version: String): Boolean {
+    val stableKeywords = listOf("RELEASE", "FINAL", "GA")
+    val isStable = stableKeywords.any { version.uppercase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    return !isStable && !regex.matches(version)
+}
+tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
+    rejectVersionIf {
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
+    }
+}
+// use: ./gradlew dependencyUpdates
