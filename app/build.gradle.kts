@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.gradle.versions)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -46,6 +47,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        compose = true
     }
 
     // Do not fail the build when lint errors are found
@@ -70,6 +72,7 @@ dependencies {
 
     // di
     implementation(libs.hilt.android)
+    debugImplementation(libs.ui.tooling)
     kapt(libs.hilt.compiler)
     androidTestImplementation(libs.hilt.testing)
     kaptAndroidTest(libs.hilt.compiler)
@@ -80,6 +83,19 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     // optional - Test helpers
     testImplementation(libs.androidx.room.testing)
+
+    // compose
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.runtime.livedata)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -96,6 +112,11 @@ ktlint {
     }
     coloredOutput.set(true)
     outputColorName.set("RED")
+    additionalEditorconfig.set(
+        mapOf(
+            "ktlint_function_naming_ignore_when_annotated_with" to "Composable",
+        ),
+    )
 }
 
 detekt {

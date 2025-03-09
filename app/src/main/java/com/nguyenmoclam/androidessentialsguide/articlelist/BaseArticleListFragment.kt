@@ -6,17 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.nguyenmoclam.androidessentialsguide.databinding.FragmentArticleListBinding
+import com.nguyenmoclam.androidessentialsguide.compose.ArticleList
+import com.nguyenmoclam.androidessentialsguide.compose.StudyGuideTheme
 import com.nguyenmoclam.androidessentialsguide.models.Article
-import com.nguyenmoclam.androidessentialsguide.utils.visibleIf
 
 abstract class BaseArticleListFragment : Fragment(), ArticleClickListener {
-    private var _binding: FragmentArticleListBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var adapter: ArticleAdapter
-
     abstract val viewModel: BaseArticleListViewModel
 
     override fun onCreateView(
@@ -24,38 +25,34 @@ abstract class BaseArticleListFragment : Fragment(), ArticleClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentArticleListBinding.inflate(inflater, container, false)
-        adapter =
-            ArticleAdapter(
-                clickListener = this,
-            )
-        setupRecyclerView()
-        return binding.root
-    }
+        val composeView = ComposeView(requireContext())
+        composeView.setContent {
+            StudyGuideTheme {
+                val state = viewModel.state.observeAsState()
+                when (val currentState = state.value) {
+                    is ArticleListViewState.Loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.wrapContentSize(align = Alignment.Center),
+                        )
+                    }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
+                    is ArticleListViewState.Success -> {
+                        ArticleList(
+                            articles = currentState.articles,
+                            onBookmarkClick = { article -> this.onBookmarkClicked(article) },
+                            onArticleClick = { article -> this.onArticleClicked(article) },
+                        )
+                    }
 
-        subscribeToViewModel()
-
-        binding.retryButton.setOnClickListener {
-            viewModel.retryClicked()
+                    ArticleListViewState.Empty -> {}
+                    is ArticleListViewState.Error -> {
+                    }
+                    null -> {}
+                }
+            }
         }
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setupRecyclerView() {
-        binding.articleList.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = this@BaseArticleListFragment.adapter
-        }
+        return composeView
     }
 
     override fun onArticleClicked(article: Article) {
@@ -66,23 +63,5 @@ abstract class BaseArticleListFragment : Fragment(), ArticleClickListener {
 
     override fun onBookmarkClicked(article: Article) {
         viewModel.bookmarkClicked(article)
-    }
-
-    private fun subscribeToViewModel() {
-        viewModel.state.observe(viewLifecycleOwner) { viewState ->
-            displayViewState(viewState)
-        }
-    }
-
-    private fun displayViewState(viewState: ArticleListViewState) {
-        binding.progressBar.visibleIf(viewState is ArticleListViewState.Loading)
-        binding.articleList.visibleIf(viewState is ArticleListViewState.Success)
-        binding.errorGroup.visibleIf(viewState is ArticleListViewState.Error)
-        binding.emptyStateTextView.visibleIf(viewState is ArticleListViewState.Empty)
-        binding.emptyStateTextView.setText(viewModel.emptyStateMessageTextRes)
-
-        if (viewState is ArticleListViewState.Success) {
-            adapter.articles = viewState.articles
-        }
     }
 }
