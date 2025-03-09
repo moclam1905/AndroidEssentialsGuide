@@ -5,7 +5,19 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewArticleListItem">
+      <SelectionState runConfigName="ArticleListTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="displayArticleList()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="displayBookmarkedArticleWithNoTags()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="ArticleListItemTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="displayNonBookmarkedArticleWithTags()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

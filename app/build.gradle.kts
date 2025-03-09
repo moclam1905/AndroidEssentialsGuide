@@ -106,6 +106,9 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.core.testing)
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.8")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.8")
+    androidTestImplementation("com.google.truth:truth:1.1.2")
 }
 
 ktlint {

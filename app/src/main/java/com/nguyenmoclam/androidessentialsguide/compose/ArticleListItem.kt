@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.nguyenmoclam.androidessentialsguide.R
 import com.nguyenmoclam.androidessentialsguide.models.Article
@@ -65,13 +67,19 @@ private fun BookmarkButton(
             R.drawable.ic_bookmark_unselected
         }
 
+    val contentDescription =
+        if (article.bookmark) {
+            "Bookmarked"
+        } else {
+            "Not bookmarked"
+        }
     IconButton(
         onClick = { onClick(article) },
         modifier = Modifier,
     ) {
         Image(
             painter = painterResource(id = iconRes),
-            contentDescription = "Bookmark",
+            contentDescription = contentDescription,
             colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.secondary),
         )
     }
@@ -80,6 +88,10 @@ private fun BookmarkButton(
 @Composable
 private fun ArticleTagsRow(article: Article) {
     Row(
+        modifier =
+            Modifier.semantics {
+                contentDescription = "Article tags"
+            },
         horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.article_tags_spacing)),
     ) {
         article.tags.forEach { tag ->
@@ -120,7 +132,9 @@ private fun ArticleTitleAndAuthor(
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.article_author_bottom_padding)),
         )
-        ArticleTagsRow(article = article)
+        if (article.tags.isNotEmpty()) {
+            ArticleTagsRow(article = article)
+        }
     }
 }
 
