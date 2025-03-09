@@ -2,7 +2,6 @@ package com.nguyenmoclam.androidessentialsguide.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,7 +32,9 @@ fun ArticleListItem(
     onBookmarkClick: (Article) -> Unit,
     onArticleClick: (Article) -> Unit,
 ) {
-    Card(modifier = Modifier.clickable { onArticleClick(article) }) {
+    Card(onClick = {
+        onArticleClick(article)
+    }) {
         Row(
             modifier =
                 Modifier

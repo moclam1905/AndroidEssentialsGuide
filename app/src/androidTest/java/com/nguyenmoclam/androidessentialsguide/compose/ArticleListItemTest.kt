@@ -18,7 +18,7 @@ class ArticleListItemTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun displayBookmarkedArticleWithNoTags()  {
+    fun displayBookmarkedArticleWithNoTags() {
         val title = "My Title"
         val article =
             Article(
@@ -71,7 +71,7 @@ class ArticleListItemTest {
     }
 
     @Test
-    fun handleClickListeners()  {
+    fun handleClickListeners() {
         val title = "My Title"
 
         val article =
