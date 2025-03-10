@@ -117,8 +117,6 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.accompanist.placeholder.material)
 
-    implementation(libs.lottie.compose)
-
     // firebase analytics
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics.ktx)
