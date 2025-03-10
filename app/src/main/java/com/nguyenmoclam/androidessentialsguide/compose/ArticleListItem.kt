@@ -21,7 +21,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import com.nguyenmoclam.androidessentialsguide.R
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.utils.HtmlString
@@ -139,7 +140,9 @@ private fun ArticleTitleAndAuthor(
     }
 }
 
-@PreviewLightDark
+@Preview(
+    device = Devices.PIXEL_C,
+)
 @Composable
 fun PreviewArticleListItem() {
     val article =

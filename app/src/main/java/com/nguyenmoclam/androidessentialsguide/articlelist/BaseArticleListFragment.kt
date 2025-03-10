@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.nguyenmoclam.androidessentialsguide.compose.ArticleList
+import com.nguyenmoclam.androidessentialsguide.compose.ArticleCollection
 import com.nguyenmoclam.androidessentialsguide.compose.StudyGuideTheme
 import com.nguyenmoclam.androidessentialsguide.models.Article
 
@@ -37,7 +37,7 @@ abstract class BaseArticleListFragment : Fragment(), ArticleClickListener {
                     }
 
                     is ArticleListViewState.Success -> {
-                        ArticleList(
+                        ArticleCollection(
                             articles = currentState.articles,
                             onBookmarkClick = { article -> this.onBookmarkClicked(article) },
                             onArticleClick = { article -> this.onArticleClicked(article) },
@@ -47,6 +47,7 @@ abstract class BaseArticleListFragment : Fragment(), ArticleClickListener {
                     ArticleListViewState.Empty -> {}
                     is ArticleListViewState.Error -> {
                     }
+
                     null -> {}
                 }
             }
