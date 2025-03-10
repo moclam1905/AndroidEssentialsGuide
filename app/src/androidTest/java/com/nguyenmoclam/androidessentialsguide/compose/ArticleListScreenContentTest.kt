@@ -1,11 +1,11 @@
 package com.nguyenmoclam.androidessentialsguide.compose
 
-import com.nguyenmoclam.androidessentialsguide.ArticleListScreenContent
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import com.nguyenmoclam.androidessentialsguide.ArticleListScreenContent
 import com.nguyenmoclam.androidessentialsguide.articlelist.ArticleListViewState
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.utils.HtmlString

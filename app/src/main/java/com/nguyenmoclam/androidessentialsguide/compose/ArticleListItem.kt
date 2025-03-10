@@ -113,9 +113,10 @@ private fun ArticleTagsRow(
                 modifier =
                     childModifier
                         .background(
-                            color = MaterialTheme.colorScheme.primary.copy(
-                                alpha = 0.5f,
-                            ),
+                            color =
+                                MaterialTheme.colorScheme.primary.copy(
+                                    alpha = 0.5f,
+                                ),
                             shape = CircleShape,
                         )
                         .padding(
