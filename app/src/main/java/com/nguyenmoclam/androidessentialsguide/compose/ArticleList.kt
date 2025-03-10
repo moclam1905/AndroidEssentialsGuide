@@ -26,6 +26,8 @@ var SemanticsPropertyReceiver.columnWidth by ColumnWidthKey
 
 @Composable
 fun ArticleList(
+    modifier: Modifier = Modifier,
+    childModifier: Modifier = Modifier,
     articles: List<Article>,
     onBookmarkClick: (Article) -> Unit,
     onArticleClick: (Article) -> Unit,
@@ -33,7 +35,7 @@ fun ArticleList(
     val columnWidthPercentage = getColumnWidthPercentage()
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
     ) {
         ArticleListColumn(
             articles = articles,
@@ -47,6 +49,7 @@ fun ArticleList(
                     .semantics {
                         columnWidth = columnWidthPercentage
                     },
+            childModifier = childModifier,
         )
     }
 }
@@ -54,6 +57,7 @@ fun ArticleList(
 @Composable
 private fun ArticleListColumn(
     modifier: Modifier = Modifier,
+    childModifier: Modifier,
     articles: List<Article>,
     onBookmarkClick: (Article) -> Unit,
     onArticleClick: (Article) -> Unit,
@@ -73,6 +77,7 @@ private fun ArticleListColumn(
                 article = article,
                 onBookmarkClick = onBookmarkClick,
                 onArticleClick = onArticleClick,
+                childModifier = childModifier,
             )
         }
     }

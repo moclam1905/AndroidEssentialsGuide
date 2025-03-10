@@ -9,6 +9,7 @@ import com.nguyenmoclam.androidessentialsguide.models.Article
 @Composable
 fun ArticleCollection(
     modifier: Modifier = Modifier,
+    childModifier: Modifier = Modifier,
     articles: List<Article>,
     onBookmarkClick: (Article) -> Unit,
     onArticleClick: (Article) -> Unit,
@@ -18,12 +19,15 @@ fun ArticleCollection(
     if (shouldShowGrid) {
         ArticleGrid(
             modifier = modifier,
+            childModifier = childModifier,
             articles = articles,
             onBookmarkClick = onBookmarkClick,
             onArticleClick = onArticleClick,
         )
     } else {
         ArticleList(
+            modifier = modifier,
+            childModifier = childModifier,
             articles = articles,
             onBookmarkClick = onBookmarkClick,
             onArticleClick = onArticleClick,

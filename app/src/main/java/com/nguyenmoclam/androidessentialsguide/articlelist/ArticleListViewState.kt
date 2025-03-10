@@ -9,5 +9,5 @@ sealed class ArticleListViewState {
 
     data class Error(val message: Throwable) : ArticleListViewState()
 
-    object Empty : ArticleListViewState()
+    data object Empty : ArticleListViewState()
 }

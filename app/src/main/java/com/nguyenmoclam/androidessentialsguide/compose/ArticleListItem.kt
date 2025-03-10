@@ -23,12 +23,15 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.nguyenmoclam.androidessentialsguide.R
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.utils.HtmlString
 
 @Composable
 fun ArticleListItem(
+    modifier: Modifier = Modifier,
+    childModifier: Modifier = Modifier,
     article: Article,
     onBookmarkClick: (Article) -> Unit,
     onArticleClick: (Article) -> Unit,
@@ -38,7 +41,7 @@ fun ArticleListItem(
     }) {
         Row(
             modifier =
-                Modifier
+                modifier
                     .padding(
                         all = dimensionResource(id = R.dimen.article_list_item_padding),
                     )
@@ -50,6 +53,7 @@ fun ArticleListItem(
                 modifier = Modifier.weight(1f),
             )
             BookmarkButton(
+                modifier = childModifier,
                 article = article,
                 onClick = onBookmarkClick,
             )
@@ -59,6 +63,7 @@ fun ArticleListItem(
 
 @Composable
 private fun BookmarkButton(
+    modifier: Modifier,
     article: Article,
     onClick: (Article) -> Unit,
 ) {
@@ -77,7 +82,7 @@ private fun BookmarkButton(
         }
     IconButton(
         onClick = { onClick(article) },
-        modifier = Modifier,
+        modifier = modifier,
     ) {
         Image(
             painter = painterResource(id = iconRes),
@@ -88,10 +93,14 @@ private fun BookmarkButton(
 }
 
 @Composable
-private fun ArticleTagsRow(article: Article) {
+private fun ArticleTagsRow(
+    modifier: Modifier = Modifier,
+    childModifier: Modifier = Modifier,
+    article: Article,
+) {
     Row(
         modifier =
-            Modifier.semantics {
+            modifier.semantics {
                 contentDescription = "Article tags"
             },
         horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.article_tags_spacing)),
@@ -102,7 +111,7 @@ private fun ArticleTagsRow(article: Article) {
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier =
-                    Modifier
+                    childModifier
                         .background(
                             color = MaterialTheme.colorScheme.primary,
                             shape = CircleShape,
@@ -119,23 +128,32 @@ private fun ArticleTagsRow(article: Article) {
 @Composable
 private fun ArticleTitleAndAuthor(
     modifier: Modifier = Modifier,
+    childModifier: Modifier = Modifier,
     article: Article,
 ) {
+    val authorLabelWidthRatio = 0.75f
     Column(
         modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
             text = article.htmlTitle.getInput(),
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.article_title_bottom_padding)),
+            modifier =
+                childModifier
+                    .fillMaxWidth()
+                    .padding(bottom = dimensionResource(id = R.dimen.article_title_bottom_padding)),
         )
         Text(
             text = "By ${article.authorName}",
             style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.article_author_bottom_padding)),
+            modifier =
+                childModifier
+                    .fillMaxWidth(authorLabelWidthRatio)
+                    .padding(bottom = dimensionResource(id = R.dimen.article_author_bottom_padding)),
         )
         if (article.tags.isNotEmpty()) {
-            ArticleTagsRow(article = article)
+            ArticleTagsRow(article = article, childModifier = childModifier)
         }
     }
 }

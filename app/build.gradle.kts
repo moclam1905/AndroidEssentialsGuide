@@ -115,6 +115,7 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.material.icons.core)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.accompanist.placeholder.material)
 
     implementation(libs.lottie.compose)
 

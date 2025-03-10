@@ -17,6 +17,7 @@ import com.nguyenmoclam.androidessentialsguide.utils.HtmlString
 @Composable
 fun ArticleGrid(
     modifier: Modifier = Modifier,
+    childModifier: Modifier = Modifier,
     articles: List<Article>,
     onBookmarkClick: (Article) -> Unit,
     onArticleClick: (Article) -> Unit,
@@ -35,6 +36,7 @@ fun ArticleGrid(
                     article = article,
                     onBookmarkClick = onBookmarkClick,
                     onArticleClick = onArticleClick,
+                    childModifier = childModifier,
                 )
             }
         }
