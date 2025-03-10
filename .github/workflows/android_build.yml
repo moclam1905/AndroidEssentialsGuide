@@ -16,7 +16,7 @@ jobs:
         env:
           FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
         run: |
-          echo "$FIREBASE_SECRET" | base64 --decode > app/google-services.json
+          echo "$FIREBASE_SECRET" | base64 --decode | tr -d '\r' > app/google-services.json
           cat app/google-services.json
 
       # https://medium.com/@thiagolopessilva/running-android-unit-testing-on-github-action-with-a-project-that-contains-firebase-dependency-621603363bc1
