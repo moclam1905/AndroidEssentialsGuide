@@ -18,11 +18,6 @@ ArticleItem.kt  # Material3 list item
 - ViewModel unit tests
 - Espresso interoperability
 
-## 🛠 Project Setup
-```bash
-# Requires Android Studio Arctic Fox+
-git clone https://github.com/yourusername/AndroidEssentialsGuide.git
-```
 
 ## 📚 Learning Resources
 ```markdown
