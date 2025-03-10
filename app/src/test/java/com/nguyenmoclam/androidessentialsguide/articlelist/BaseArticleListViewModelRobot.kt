@@ -1,6 +1,8 @@
 package com.nguyenmoclam.androidessentialsguide.articlelist
 
 import com.google.common.truth.Truth.assertThat
+import com.nguyenmoclam.androidessentialsguide.analytics.AnalyticsEvent
+import com.nguyenmoclam.androidessentialsguide.fake.FakeAnalyticsTracker
 import com.nguyenmoclam.androidessentialsguide.fake.FakeArticleRepository
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.testObserver
@@ -8,6 +10,7 @@ import com.nguyenmoclam.androidessentialsguide.testObserver
 class BaseArticleListViewModelRobot {
     private lateinit var viewModel: BaseArticleListViewModel
     private val fakeArticleRepository = FakeArticleRepository()
+    private val fakeAnalyticsTracker = FakeAnalyticsTracker()
 
     suspend fun emitArticles(articles: List<Article>) =
         apply {
@@ -25,6 +28,7 @@ class BaseArticleListViewModelRobot {
                 object :
                     BaseArticleListViewModel(
                         articleRepository = fakeArticleRepository,
+                        fakeAnalyticsTracker,
                     ) {
                     override val emptyStateMessageTextRes: Int
                         get() = 0
@@ -62,4 +66,9 @@ class BaseArticleListViewModelRobot {
     fun cleanUp() {
         fakeArticleRepository.closeChannels()
     }
+
+    fun assertEventTracked(expectedEvent: AnalyticsEvent) =
+        apply {
+            fakeAnalyticsTracker.assertEventTracked(expectedEvent)
+        }
 }

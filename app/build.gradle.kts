@@ -1,6 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -12,7 +13,19 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.gradle.versions)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.gms.google.services)
 }
+
+fun loadLocalProperties(file: File): Properties {
+    val properties = Properties()
+    if (file.exists()) {
+        file.inputStream().use { properties.load(it) }
+    }
+    return properties
+}
+
+val localPropertiesFile = rootProject.file("local.properties")
+val localProperties = loadLocalProperties(localPropertiesFile)
 
 android {
     namespace = "com.nguyenmoclam.androidessentialsguide"
@@ -26,6 +39,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val segmentApiKey: String = localProperties.getProperty("SegmentKey", "")
+        buildConfigField("String", "SEGMENT_API_KEY", "\"$segmentApiKey\"")
     }
 
     buildTypes {
@@ -48,6 +64,7 @@ android {
         viewBinding = true
         dataBinding = true
         compose = true
+        buildConfig = true
     }
 
     // Do not fail the build when lint errors are found
@@ -72,6 +89,7 @@ dependencies {
 
     // di
     implementation(libs.hilt.android)
+    implementation(libs.firebase.analytics)
     debugImplementation(libs.ui.tooling)
     kapt(libs.hilt.compiler)
     androidTestImplementation(libs.hilt.testing)
@@ -100,15 +118,20 @@ dependencies {
 
     implementation(libs.lottie.compose)
 
+    // firebase analytics
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.analytics)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.core.testing)
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.8")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.8")
-    androidTestImplementation("com.google.truth:truth:1.1.2")
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.truth.v112)
 }
 
 ktlint {

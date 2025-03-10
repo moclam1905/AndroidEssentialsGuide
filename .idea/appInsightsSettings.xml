@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.nguyenmoclam.androidessentialsguide" />
+                  <option name="mobileSdkAppId" value="1:591573127935:android:ae5ca4cd47b5e3ce5632ca" />
+                  <option name="projectId" value="device-streaming-2019e355" />
+                  <option name="projectNumber" value="591573127935" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

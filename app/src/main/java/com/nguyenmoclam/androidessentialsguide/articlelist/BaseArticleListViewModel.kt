@@ -1,9 +1,12 @@
 package com.nguyenmoclam.androidessentialsguide.articlelist
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nguyenmoclam.androidessentialsguide.analytics.AnalyticsTracker
+import com.nguyenmoclam.androidessentialsguide.analytics.BookmarkedArticleAnalyticsEvent
 import com.nguyenmoclam.androidessentialsguide.data.ArticleRepository
 import com.nguyenmoclam.androidessentialsguide.data.DataResponse
 import com.nguyenmoclam.androidessentialsguide.models.Article
@@ -11,10 +14,12 @@ import kotlinx.coroutines.launch
 
 abstract class BaseArticleListViewModel(
     private val articleRepository: ArticleRepository,
+    private val analyticsTracker: AnalyticsTracker,
 ) : ViewModel() {
     private val mState: MutableLiveData<ArticleListViewState> = MutableLiveData()
     val state: LiveData<ArticleListViewState> = mState
 
+    @get:StringRes
     abstract val emptyStateMessageTextRes: Int
 
     init {
@@ -50,6 +55,14 @@ abstract class BaseArticleListViewModel(
         viewModelScope.launch {
             articleRepository.persistArticle(updatedArticle)
         }
+
+        val event =
+            BookmarkedArticleAnalyticsEvent(
+                articleTitle = updatedArticle.htmlTitle.getInput(),
+                isBookmarked = updatedArticle.bookmark,
+            )
+
+        analyticsTracker.trackEvent(event)
 
         val currentList = (mState.value as? ArticleListViewState.Success)?.articles.orEmpty()
         val updatedList =

@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.gradle.versions)
     alias(libs.plugins.version.catalog.update)
     alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.google.gms.google.services) apply false
 }
 
 private val bytecodeVersion = JavaVersion.toVersion(libs.versions.jvmBytecode.get())

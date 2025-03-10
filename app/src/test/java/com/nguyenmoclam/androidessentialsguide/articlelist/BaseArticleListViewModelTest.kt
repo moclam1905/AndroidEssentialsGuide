@@ -2,6 +2,7 @@ package com.nguyenmoclam.androidessentialsguide.articlelist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nguyenmoclam.androidessentialsguide.CoroutinesTestRule
+import com.nguyenmoclam.androidessentialsguide.analytics.BookmarkedArticleAnalyticsEvent
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.utils.HtmlString
 import kotlinx.coroutines.runBlocking
@@ -74,12 +75,18 @@ class BaseArticleListViewModelTest {
 
             val initialArticles = listOf(unBookmarkedArticle)
             val updatedArticles = listOf(bookmarkedArticle)
+            val expectedEvent =
+                BookmarkedArticleAnalyticsEvent(
+                    articleTitle = "Test Title",
+                    isBookmarked = true,
+                )
 
             testRobot.buildViewModel().emitArticles(initialArticles)
                 .assertViewState(ArticleListViewState.Success(initialArticles))
                 .clickBookmark(unBookmarkedArticle)
                 .assertViewState(ArticleListViewState.Success(updatedArticles))
                 .assertArticleWasPersisted(bookmarkedArticle)
+                .assertEventTracked(expectedEvent)
         }
 
     @Test
