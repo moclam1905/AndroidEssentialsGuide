@@ -4,11 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.test.hasScrollToIndexAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.printToLog
 import com.nguyenmoclam.androidessentialsguide.models.Article
 import com.nguyenmoclam.androidessentialsguide.utils.HtmlString
@@ -22,8 +24,7 @@ class ArticleListTest {
     @Test
     fun displayArticleList() {
         val articles =
-            (0..10).map {
-                    index ->
+            (0..10).map { index ->
                 Article(
                     htmlTitle = HtmlString("Article Number: $index"),
                 )
@@ -34,15 +35,16 @@ class ArticleListTest {
         }
 
         composeTestRule.onRoot().printToLog("ArticleListItemTest")
-
-        composeTestRule.onNodeWithText("Article Number: 0", useUnmergedTree = true).assertExists()
-        composeTestRule.onNodeWithText("Article Number: 1", useUnmergedTree = true).assertExists()
-        composeTestRule.onNodeWithText("Article Number: 2", useUnmergedTree = true).assertExists()
-        composeTestRule.onNodeWithText("Article Number: 3", useUnmergedTree = true).assertExists()
+        val indexes = (0..10)
+        indexes.forEach { index ->
+            composeTestRule.onNode(hasScrollToIndexAction()).performScrollToIndex(index)
+            composeTestRule.onNodeWithText("Article Number: $index", useUnmergedTree = true)
+                .assertExists()
+        }
     }
 
     @Test
-    fun clickingBookmarkIconUpdatesUI()  {
+    fun clickingBookmarkIconUpdatesUI() {
         val testArticle = Article(htmlTitle = HtmlString("Test Title"), bookmark = false)
         composeTestRule.setContent {
             var articleList: List<Article> by remember { mutableStateOf(listOf(testArticle)) }
